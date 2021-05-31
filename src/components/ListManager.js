@@ -13,7 +13,20 @@ function ListManager({ initial }) {
   const [lists, dispatch] = useReducer(reducer, initial);
 
   return (
-    <div>
+    <div className="list-wrapper">
+      <List clNa="list">
+        <Header>
+          <p>Hello Hello</p>
+        </Header>
+        <Content>
+          <Item clNa="item" txt="hello" />
+          <Item clNa="item" txt="hello" />
+          <Item clNa="item" txt="hello" />
+        </Content>
+        <Footer>
+          <p>Hello Hello</p>
+        </Footer>
+      </List>
       <List clNa="list">
         <Header>
           <p>Hello Hello</p>
