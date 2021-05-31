@@ -1,4 +1,43 @@
 .App {
   background: #1a1a1b;
   min-height: 100vh;
+  padding: 15px;
+}
+
+.list {
+  width: 260px;
+
+  background: #0d0d0f;
+  color: white;
+}
+
+.header {
+  width: calc(100% - 30px);
+  height: 40px;
+  padding: 0 15px;
+
+  display: flex;
+  align-items: center;
+}
+
+.footer {
+  width: calc(100% - 30px);
+  height: 40px;
+  padding: 0 15px;
+  
+  display: flex;
+  align-items: center;
+}
+
+.content {
+  width: calc(100% - 20px);
+  padding: 10px;
+}
+
+.item {
+  background: #32323f;
+  
+  padding: 5px;
+  margin-bottom: 5px;
+  margin-right: 0;
 }
