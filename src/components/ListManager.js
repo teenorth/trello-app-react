@@ -1,47 +1,34 @@
-import React, { useReducer } from 'react';
+import React, { useReducer } from "react";
 import List from "./List";
 import Header from "./Header";
 import Footer from "./Footer";
 import Content from "./Content";
 import Item from "./Item";
 
-function reducer(state, action) {
-
-}
+function reducer(state, action) {}
 
 function ListManager({ initial }) {
   const [lists, dispatch] = useReducer(reducer, initial);
 
   return (
     <div className="list-wrapper">
-      <List clNa="list">
-        <Header>
-          <p>Hello Hello</p>
-        </Header>
-        <Content>
-          <Item clNa="item" txt="hello" />
-          <Item clNa="item" txt="hello" />
-          <Item clNa="item" txt="hello" />
-        </Content>
-        <Footer>
-          <p>Hello Hello</p>
-        </Footer>
-      </List>
-      <List clNa="list">
-        <Header>
-          <p>Hello Hello</p>
-        </Header>
-        <Content>
-          <Item clNa="item" txt="hello" />
-          <Item clNa="item" txt="hello" />
-          <Item clNa="item" txt="hello" />
-        </Content>
-        <Footer>
-          <p>Hello Hello</p>
-        </Footer>
-      </List>
+      {lists?.map((list, listI) => {
+        return (
+          <List clNa="list" key={listI}>
+            <Header>{list.title}</Header>
+            <Content>
+              {list.items?.map((item, itemI) => {
+                return <Item clNa="item" txt={item.text} key={itemI} />;
+              })}
+            </Content>
+            <Footer>
+              <p>Footer</p>
+            </Footer>
+          </List>
+        );
+      })}
     </div>
-  )
+  );
 }
 
-export default ListManager
+export default ListManager;
