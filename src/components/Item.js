@@ -1,11 +1,11 @@
 import React from "react";
 
-function Item({ clNa, txt, mseDown }) {
+function Item({ clNa, txt, mseDown, mseEnter }) {
   return (
     <div
       className={clNa}
-      onMouseDown={(evt) => mseDown(evt)}
-      onMouseEnter={() => console.log("mouse enter")}>
+      onMouseDown={(evt) => mseDown(evt, txt)}>
+      <div className="drop-zone" onMouseEnter={() => mseEnter()} />
       {txt}
     </div>
   );
