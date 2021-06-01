@@ -22,11 +22,7 @@ function reducer(state, params) {
       );
       return newList;
     case "swap-list":
-      newList.splice(
-        to.listI,
-        0,
-        newList.splice(from.listI, 1)[0]
-      );
+      newList.splice(to.listI, 0, newList.splice(from.listI, 1)[0]);
       return newList;
     default:
       throw new Error();
@@ -86,14 +82,18 @@ function ListManager({ initial }) {
       dispatch({ type: "swap-list", from: curIdx, to: thisIdx });
       drgItem.current = thisIdx;
     }
-  }
+  };
 
   return (
     <div className="list-wrapper">
       {lists?.map((list, listI) => {
         return (
           <List
-            clNa="list"
+            clNa={
+              isList(drgItem.current, { listI })
+                ? "list dragging"
+                : "list"
+            }
             key={listI}
             onMseDown={(evt) => listMseDown(evt, list, { listI })}
             onMseEnter={() => listMseEnter({ listI })}>
