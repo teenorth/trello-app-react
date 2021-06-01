@@ -191,8 +191,6 @@ function ListManager({ initial }) {
                   </>
                 );
               })}
-            </Content>
-            <Footer>
               <CreateItem
                 createItem={(data) =>
                   dispatch({
@@ -202,7 +200,7 @@ function ListManager({ initial }) {
                   })
                 }
               />
-            </Footer>
+            </Content>
           </List>
         );
       })}
