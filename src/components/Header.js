@@ -3,7 +3,6 @@ import React from 'react'
 function Header({ children, dragStart }) {
   const handleDrag = (evt) => {
     evt.preventDefault();
-    console.log("start");
     dragStart(evt);
   };
 
