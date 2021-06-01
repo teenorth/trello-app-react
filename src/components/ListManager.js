@@ -24,6 +24,9 @@ function reducer(state, params) {
     case "swap-list":
       newList.splice(to.listI, 0, newList.splice(from.listI, 1)[0]);
       return newList;
+    case "edit-item-text":
+      newList[index.listI].items[index.itemI].text = payload;
+      return newList;
     default:
       throw new Error();
   }
@@ -126,6 +129,13 @@ function ListManager({ initial }) {
                         itemOnDrag(evt, txt, { listI, itemI })
                       }
                       mseEnter={() => itemMseEnter({ listI, itemI })}
+                      updateItem={(data) =>
+                        dispatch({
+                          type: "edit-item-text",
+                          index: { listI, itemI },
+                          payload: data,
+                        })
+                      }
                     />
                   </>
                 );
