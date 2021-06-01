@@ -1,5 +1,5 @@
 .App {
-  background: #1a1a1b;
+  background: var(--main-highlight);
   min-height: 100vh;
   padding: 15px;
 }
@@ -13,7 +13,7 @@
   height: max-content;
   margin-right: 15px;
 
-  background: #0d0d0f;
+  background: var(--main-dark);
   color: white;
 }
 
@@ -41,12 +41,22 @@
 }
 
 .item {
-  background: #32323f;
+  background: var(--main-dark-200);
   
   padding: 5px;
   margin-bottom: 5px;
   margin-right: 0;
   position: relative;
+}
+
+.dragging {
+  background: var(--main-dark-400);
+  color: var(--main-dark-400);
+}
+
+.dragging *:not(.drag-zone) {
+  background: var(--main-dark-400);
+  color: var(--main-dark-400);
 }
 
 .drop-zone {
