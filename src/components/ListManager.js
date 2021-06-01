@@ -69,7 +69,11 @@ function ListManager({ initial }) {
                 return (
                   <>
                     <Item
-                      clNa="item"
+                      clNa={
+                        isItem(drgItem.current, { listI, itemI })
+                          ? "item dragging"
+                          : "item"
+                      }
                       txt={item.text}
                       key={itemI}
                       mseDown={(evt, txt) =>
