@@ -15,6 +15,7 @@
 
   background: var(--main-dark);
   color: white;
+  position: relative;
 }
 
 .header {
@@ -66,4 +67,15 @@
   left: 0;
   height: 28px;
   width: 100%;
+}
+
+.drag-zone {
+  position: absolute;
+  /* background: rgba(0, 0, 0, 0.30);  */
+  top: 0;
+  left: 0;
+  height: 32px;
+  width: 100%;
+  z-index: 0;
+  cursor: grab;
 }
