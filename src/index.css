@@ -17,6 +17,8 @@
 body {
   background: var(--main-highlight);
   position: relative;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 #portal {
