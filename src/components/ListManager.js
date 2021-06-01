@@ -102,7 +102,13 @@ function ListManager({ initial }) {
             }
             key={listI}
             onMseDown={(evt) => listMseDown(evt, list, { listI })}
-            onMseEnter={() => listMseEnter({ listI })}>
+            onMseEnter={
+              list.items.length
+                ? () => listMseEnter({ listI })
+                : itemDragging.current
+                ? () => itemMseEnter({ listI, itemI: 0 })
+                : () => listMseEnter({ listI })
+            }>
             <Header>{list.title}</Header>
             <Content>
               {list.items?.map((item, itemI) => {
