@@ -10,6 +10,7 @@ import CreateItem from "./CreateItem";
 import { isItem, isList } from "../utils/util";
 import DragCopy from "./DragCopy";
 import ListCopy from "./ListCopy";
+import CreateList from "./CreateList";
 
 function reducer(state, params) {
   const newList = JSON.parse(JSON.stringify(state));
@@ -37,6 +38,9 @@ function reducer(state, params) {
       return newList;
     case "create-item":
       newList[index.listI].items.push({ text: payload, isCompleted: false });
+      return newList;
+    case "create-list":
+      newList.push({ title: "New list", items: [] });
       return newList;
     default:
       throw new Error();
@@ -184,6 +188,7 @@ function ListManager({ initial }) {
         );
       })}
       {showCopy && drgCopy.current}
+      <CreateList onClick={() => dispatch({ type: "create-list" })} />
     </div>
   );
 }
