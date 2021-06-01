@@ -8,18 +8,35 @@ import Item from "./Item";
 import { isItem } from "../utils/util";
 import DragCopy from "./DragCopy";
 
-function reducer(state, action) {}
+function reducer(state, params) {
+  const newList = JSON.parse(JSON.stringify(state));
+  const { type, payload, index, to, from } = params;
+
+  switch (type) {
+    case "swap-list-item":
+      newList[to.listI].items.splice(
+        to.itemI,
+        0,
+        newList[from.listI].items.splice(from.itemI, 1)[0]
+      );
+      return newList;
+    default:
+      throw new Error();
+  }
+}
 
 function ListManager({ initial }) {
   const [lists, dispatch] = useReducer(reducer, initial);
 
   const drgItem = useRef(null);
   const drgElement = useRef(null);
+  const drgCopy = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleMseDown = (evt, idx) => {
+  const handleMseDown = (evt, txt, idx) => {
     drgItem.current = idx;
     drgElement.current = evt;
+    drgCopy.current = <DragCopy txt={txt} copy={evt} />;
     window.addEventListener("mouseup", handleMseUp);
     setIsDragging(true);
   };
@@ -27,14 +44,18 @@ function ListManager({ initial }) {
   const handleMseUp = () => {
     drgItem.current = null;
     drgElement.current = null;
+    drgCopy.current = null;
     window.removeEventListener("mouseup", handleMseUp);
     setIsDragging(false);
   };
 
-  const createCopy = (txt, curIdx, thisIdx) => {
-    return isItem(curIdx, thisIdx) ? (
-      <DragCopy txt={txt} copy={drgElement.current} />
-    ) : null;
+  const handleMseEnter = (thisIdx) => {
+    const curIdx = drgItem.current;
+    if (!curIdx || !thisIdx) return;
+    if (!isItem(curIdx, thisIdx)) {
+      dispatch({ type: "swap-list-item", from: curIdx, to: thisIdx });
+      drgItem.current = thisIdx;
+    }
   };
 
   return (
@@ -47,13 +68,14 @@ function ListManager({ initial }) {
               {list.items?.map((item, itemI) => {
                 return (
                   <>
-                    {isDragging &&
-                      createCopy(item.text, drgItem.current, { listI, itemI })}
                     <Item
                       clNa="item"
                       txt={item.text}
                       key={itemI}
-                      mseDown={(evt) => handleMseDown(evt, { listI, itemI })}
+                      mseDown={(evt, txt) =>
+                        handleMseDown(evt, txt, { listI, itemI })
+                      }
+                      mseEnter={() => handleMseEnter({ listI, itemI })}
                     />
                   </>
                 );
@@ -65,6 +87,7 @@ function ListManager({ initial }) {
           </List>
         );
       })}
+      {isDragging && drgCopy.current}
     </div>
   );
 }
