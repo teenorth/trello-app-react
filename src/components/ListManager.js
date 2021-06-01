@@ -36,15 +36,18 @@ function ListManager({ initial }) {
   const drgElement = useRef(null);
   const drgCopy = useRef(null);
 
-  const [isDragging, setIsDragging] = useState(false);
-  const [listDragging, setListDragging] = useState(false);
+
+  const itemDragging = useRef(false);
+  const listDragging = useRef(false);
+  const [showCopy, setShowCopy] = useState(false);
 
   const handleMseDown = (evt, txt, idx) => {
     drgItem.current = idx;
     drgElement.current = evt;
     drgCopy.current = <DragCopy txt={txt} copy={evt} />;
     window.addEventListener("mouseup", handleMseUp);
-    setIsDragging(true);
+    itemDragging.current = true;
+    setShowCopy(true);
   };
 
   const handleMseUp = () => {
@@ -52,14 +55,15 @@ function ListManager({ initial }) {
     drgElement.current = null;
     drgCopy.current = null;
     window.removeEventListener("mouseup", handleMseUp);
-    setIsDragging(false);
-    setListDragging(false);
+    itemDragging.current = false;
+    listDragging.current = false;
+    setShowCopy(false);
   };
 
   const handleMseEnter = (thisIdx) => {
     const curIdx = drgItem.current;
     if (!curIdx || !thisIdx) return;
-    if (!isDragging) return;
+    if (!itemDragging.current) return;
     if (!isItem(curIdx, thisIdx)) {
       dispatch({ type: "swap-list-item", from: curIdx, to: thisIdx });
       drgItem.current = thisIdx;
@@ -71,13 +75,14 @@ function ListManager({ initial }) {
     drgElement.current = evt;
     drgCopy.current = <ListCopy list={list} copy={evt} />;
     window.addEventListener("mouseup", handleMseUp);
-    setListDragging(true);
+    listDragging.current = true;
+    setShowCopy(true);
   };
 
   const listMseEnter = (thisIdx) => {
     const curIdx = drgItem.current;
     if (!curIdx || !thisIdx) return;
-    if (!listDragging) return;
+    if (!listDragging.current) return;
     if (!isList(curIdx, thisIdx)) {
       dispatch({ type: "swap-list", from: curIdx, to: thisIdx });
       drgItem.current = thisIdx;
@@ -91,7 +96,9 @@ function ListManager({ initial }) {
           <List
             clNa={
               isList(drgItem.current, { listI })
-                ? "list dragging"
+                ? listDragging.current
+                  ? "list dragging"
+                  : "list"
                 : "list"
             }
             key={listI}
@@ -125,7 +132,7 @@ function ListManager({ initial }) {
           </List>
         );
       })}
-      {isDragging || listDragging ? drgCopy.current : null}
+      {showCopy && drgCopy.current}
     </div>
   );
 }
