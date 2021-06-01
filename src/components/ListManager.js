@@ -42,6 +42,12 @@ function reducer(state, params) {
     case "create-list":
       newList.push({ title: "New list", items: [] });
       return newList;
+    case "complete-item":
+      newList[index.listI].items[index.itemI].isCompleted = payload;
+      return newList;
+    case "delete-item":
+      newList[index.listI].items.splice(index.itemI, 1);
+      return newList;
     default:
       throw new Error();
   }
@@ -155,6 +161,7 @@ function ListManager({ initial }) {
                           : "item"
                       }
                       txt={item.text}
+                      completed={item.isCompleted}
                       key={itemI}
                       onDrag={(evt, txt) =>
                         itemOnDrag(evt, txt, { listI, itemI })
@@ -165,6 +172,19 @@ function ListManager({ initial }) {
                           type: "edit-item-text",
                           index: { listI, itemI },
                           payload: data,
+                        })
+                      }
+                      completeItem={(data) =>
+                        dispatch({
+                          type: "complete-item",
+                          index: { listI, itemI },
+                          payload: data,
+                        })
+                      }
+                      delItem={() =>
+                        dispatch({
+                          type: "delete-item",
+                          index: { listI, itemI },
                         })
                       }
                     />
