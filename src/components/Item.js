@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
 
-function Item({ clNa, txt }) {
+function Item({ clNa, txt, mseDown }) {
   return (
-    <div className={clNa}>
+    <div
+      className={clNa}
+      onMouseDown={(evt) => mseDown(evt)}
+      onMouseEnter={() => console.log("mouse enter")}>
       {txt}
     </div>
-  )
+  );
 }
 
-export default Item
+export default Item;
