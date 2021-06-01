@@ -295,6 +295,7 @@
   border: 1px solid var(--main-highlight);
   background: var(--main-dark-200);
   color: white;
+  border-radius: 2px;
 }
 
 
