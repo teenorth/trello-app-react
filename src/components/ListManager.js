@@ -40,7 +40,7 @@ function ListManager({ initial }) {
   const listDragging = useRef(false);
   const [showCopy, setShowCopy] = useState(false);
 
-  const itemMseDown = (evt, txt, idx) => {
+  const itemOnDrag = (evt, txt, idx) => {
     drgItem.current = idx;
     drgElement.current = evt;
     drgCopy.current = <DragCopy txt={txt} copy={evt} />;
@@ -122,8 +122,8 @@ function ListManager({ initial }) {
                       }
                       txt={item.text}
                       key={itemI}
-                      mseDown={(evt, txt) =>
-                        itemMseDown(evt, txt, { listI, itemI })
+                      onDrag={(evt, txt) =>
+                        itemOnDrag(evt, txt, { listI, itemI })
                       }
                       mseEnter={() => itemMseEnter({ listI, itemI })}
                     />
