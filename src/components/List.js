@@ -1,19 +1,8 @@
 import React from "react";
 
-function List({ children, clNa, onMseEnter, dragStart, style }) {
-  const handleDrag = (evt) => {
-    evt.preventDefault();
-    console.log("start");
-    dragStart(evt);
-  };
-
+function List({ children, clNa, onMseEnter, style }) {
   return (
     <div className={clNa} onMouseEnter={(evt) => onMseEnter(evt)} style={style}>
-      <div
-        draggable
-        className="drag-zone"
-        onDragStart={(evt) => handleDrag(evt)}
-      />
       {children}
     </div>
   );

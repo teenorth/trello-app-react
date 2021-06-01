@@ -119,7 +119,6 @@ function ListManager({ initial }) {
                 : "list"
             }
             key={listI}
-            dragStart={(evt) => listDragStart(evt, list, { listI })}
             onMseEnter={
               list.items.length
                 ? () => listMseEnter({ listI })
@@ -127,7 +126,7 @@ function ListManager({ initial }) {
                 ? () => itemMseEnter({ listI, itemI: 0 })
                 : () => listMseEnter({ listI })
             }>
-            <Header>
+            <Header dragStart={(evt) => listDragStart(evt, list, { listI })}>
               <Title
                 title={list.title}
                 updateTitle={(data) =>
