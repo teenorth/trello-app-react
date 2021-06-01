@@ -52,12 +52,10 @@ function ListCopy({ list, copy }) {
             </>
           );
         })}
-      </Content>
-      <Footer>
         <CreateItem
           createItem={() => null}
         />
-      </Footer>
+      </Content>
     </List>,
     portal
   );
