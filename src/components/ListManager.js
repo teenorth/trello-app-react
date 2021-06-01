@@ -69,7 +69,7 @@ function ListManager({ initial }) {
     }
   };
 
-  const listMseDown = (evt, list, idx) => {
+  const listDragStart = (evt, list, idx) => {
     drgItem.current = idx;
     drgElement.current = evt;
     drgCopy.current = <ListCopy list={list} copy={evt} />;
@@ -111,7 +111,7 @@ function ListManager({ initial }) {
                 : "list"
             }
             key={listI}
-            onMseDown={(evt) => listMseDown(evt, list, { listI })}
+            dragStart={(evt) => listDragStart(evt, list, { listI })}
             onMseEnter={
               list.items.length
                 ? () => listMseEnter({ listI })
