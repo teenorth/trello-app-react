@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import useMousePosition from "../utils/useMousePosition";
-import ReactDOM from "react-dom"
+import ReactDOM from "react-dom";
 import List from "./List";
 import Header from "./Header";
 import Footer from "./Footer";
 import Content from "./Content";
 import Item from "./Item";
+import Title from "./Title";
+import CreateItem from "./CreateItem";
 
 const portal = document.getElementById("portal");
 
@@ -24,8 +26,18 @@ function ListCopy({ list, copy }) {
   };
 
   return ReactDOM.createPortal(
-    <List clNa="list-copy" style={getStyles()} onMseDown={() => null} onMseEnter={() => null}>
-      <Header>{list.title}</Header>
+    <List
+      clNa="list-copy"
+      style={getStyles()}
+      onMseDown={() => null}
+      onMseEnter={() => null}>
+      <Header>
+        <Title
+          title={list.title}
+          updateTitle={() => null}
+          delList={() => null}
+        />
+      </Header>
       <Content>
         {list.items?.map((item, itemI) => {
           return (
@@ -42,7 +54,9 @@ function ListCopy({ list, copy }) {
         })}
       </Content>
       <Footer>
-        <p>Footer</p>
+        <CreateItem
+          createItem={() => null}
+        />
       </Footer>
     </List>,
     portal
