@@ -120,10 +120,10 @@ function ListManager({ initial }) {
             }
             key={listI}
             onMseEnter={
-              list.items.length
-                ? () => listMseEnter({ listI })
-                : itemDragging.current
-                ? () => itemMseEnter({ listI, itemI: 0 })
+              !list.items.length
+                ? listDragging.current
+                  ? () => listMseEnter({ listI })
+                  : () => itemMseEnter({ listI, itemI: 0 })
                 : () => listMseEnter({ listI })
             }>
             <Header dragStart={(evt) => listDragStart(evt, list, { listI })}>
