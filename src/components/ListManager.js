@@ -5,8 +5,9 @@ import Footer from "./Footer";
 import Content from "./Content";
 import Item from "./Item";
 
-import { isItem } from "../utils/util";
+import { isItem, isList } from "../utils/util";
 import DragCopy from "./DragCopy";
+import ListCopy from "./ListCopy";
 
 function reducer(state, params) {
   const newList = JSON.parse(JSON.stringify(state));
@@ -20,6 +21,13 @@ function reducer(state, params) {
         newList[from.listI].items.splice(from.itemI, 1)[0]
       );
       return newList;
+    case "swap-list":
+      newList.splice(
+        to.listI,
+        0,
+        newList.splice(from.listI, 1)[0]
+      );
+      return newList;
     default:
       throw new Error();
   }
@@ -31,7 +39,9 @@ function ListManager({ initial }) {
   const drgItem = useRef(null);
   const drgElement = useRef(null);
   const drgCopy = useRef(null);
+
   const [isDragging, setIsDragging] = useState(false);
+  const [listDragging, setListDragging] = useState(false);
 
   const handleMseDown = (evt, txt, idx) => {
     drgItem.current = idx;
@@ -47,22 +57,46 @@ function ListManager({ initial }) {
     drgCopy.current = null;
     window.removeEventListener("mouseup", handleMseUp);
     setIsDragging(false);
+    setListDragging(false);
   };
 
   const handleMseEnter = (thisIdx) => {
     const curIdx = drgItem.current;
     if (!curIdx || !thisIdx) return;
+    if (!isDragging) return;
     if (!isItem(curIdx, thisIdx)) {
       dispatch({ type: "swap-list-item", from: curIdx, to: thisIdx });
       drgItem.current = thisIdx;
     }
   };
 
+  const listMseDown = (evt, list, idx) => {
+    drgItem.current = idx;
+    drgElement.current = evt;
+    drgCopy.current = <ListCopy list={list} copy={evt} />;
+    window.addEventListener("mouseup", handleMseUp);
+    setListDragging(true);
+  };
+
+  const listMseEnter = (thisIdx) => {
+    const curIdx = drgItem.current;
+    if (!curIdx || !thisIdx) return;
+    if (!listDragging) return;
+    if (!isList(curIdx, thisIdx)) {
+      dispatch({ type: "swap-list", from: curIdx, to: thisIdx });
+      drgItem.current = thisIdx;
+    }
+  }
+
   return (
     <div className="list-wrapper">
       {lists?.map((list, listI) => {
         return (
-          <List clNa="list" key={listI}>
+          <List
+            clNa="list"
+            key={listI}
+            onMseDown={(evt) => listMseDown(evt, list, { listI })}
+            onMseEnter={() => listMseEnter({ listI })}>
             <Header>{list.title}</Header>
             <Content>
               {list.items?.map((item, itemI) => {
@@ -91,7 +125,7 @@ function ListManager({ initial }) {
           </List>
         );
       })}
-      {isDragging && drgCopy.current}
+      {isDragging || listDragging ? drgCopy.current : null}
     </div>
   );
 }
