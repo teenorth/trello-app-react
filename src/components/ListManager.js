@@ -36,31 +36,20 @@ function ListManager({ initial }) {
   const drgElement = useRef(null);
   const drgCopy = useRef(null);
 
-
   const itemDragging = useRef(false);
   const listDragging = useRef(false);
   const [showCopy, setShowCopy] = useState(false);
 
-  const handleMseDown = (evt, txt, idx) => {
+  const itemMseDown = (evt, txt, idx) => {
     drgItem.current = idx;
     drgElement.current = evt;
     drgCopy.current = <DragCopy txt={txt} copy={evt} />;
-    window.addEventListener("mouseup", handleMseUp);
     itemDragging.current = true;
+    window.addEventListener("mouseup", handleMseUp);
     setShowCopy(true);
   };
 
-  const handleMseUp = () => {
-    drgItem.current = null;
-    drgElement.current = null;
-    drgCopy.current = null;
-    window.removeEventListener("mouseup", handleMseUp);
-    itemDragging.current = false;
-    listDragging.current = false;
-    setShowCopy(false);
-  };
-
-  const handleMseEnter = (thisIdx) => {
+  const itemMseEnter = (thisIdx) => {
     const curIdx = drgItem.current;
     if (!curIdx || !thisIdx) return;
     if (!itemDragging.current) return;
@@ -74,8 +63,8 @@ function ListManager({ initial }) {
     drgItem.current = idx;
     drgElement.current = evt;
     drgCopy.current = <ListCopy list={list} copy={evt} />;
-    window.addEventListener("mouseup", handleMseUp);
     listDragging.current = true;
+    window.addEventListener("mouseup", handleMseUp);
     setShowCopy(true);
   };
 
@@ -87,6 +76,16 @@ function ListManager({ initial }) {
       dispatch({ type: "swap-list", from: curIdx, to: thisIdx });
       drgItem.current = thisIdx;
     }
+  };
+
+  const handleMseUp = () => {
+    drgItem.current = null;
+    drgElement.current = null;
+    drgCopy.current = null;
+    itemDragging.current = false;
+    listDragging.current = false;
+    window.removeEventListener("mouseup", handleMseUp);
+    setShowCopy(false);
   };
 
   return (
@@ -118,9 +117,9 @@ function ListManager({ initial }) {
                       txt={item.text}
                       key={itemI}
                       mseDown={(evt, txt) =>
-                        handleMseDown(evt, txt, { listI, itemI })
+                        itemMseDown(evt, txt, { listI, itemI })
                       }
-                      mseEnter={() => handleMseEnter({ listI, itemI })}
+                      mseEnter={() => itemMseEnter({ listI, itemI })}
                     />
                   </>
                 );
