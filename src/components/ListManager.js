@@ -4,6 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Content from "./Content";
 import Item from "./Item";
+import Title from "./Title";
 
 import { isItem, isList } from "../utils/util";
 import DragCopy from "./DragCopy";
@@ -26,6 +27,12 @@ function reducer(state, params) {
       return newList;
     case "edit-item-text":
       newList[index.listI].items[index.itemI].text = payload;
+      return newList;
+    case "edit-list-title":
+      newList[index.listI].title = payload;
+      return newList;
+    case "delete-list":
+      newList.splice(index.listI, 1);
       return newList;
     default:
       throw new Error();
@@ -112,7 +119,24 @@ function ListManager({ initial }) {
                 ? () => itemMseEnter({ listI, itemI: 0 })
                 : () => listMseEnter({ listI })
             }>
-            <Header>{list.title}</Header>
+            <Header>
+              <Title
+                title={list.title}
+                updateTitle={(data) =>
+                  dispatch({
+                    type: "edit-list-title",
+                    payload: data,
+                    index: { listI },
+                  })
+                }
+                delList={() => {
+                  dispatch({
+                    type: "delete-list",
+                    index: { listI },
+                  });
+                }}
+              />
+            </Header>
             <Content>
               {list.items?.map((item, itemI) => {
                 return (
