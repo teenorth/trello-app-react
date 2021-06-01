@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import Content from "./Content";
 import Item from "./Item";
 import Title from "./Title";
+import CreateItem from "./CreateItem";
 
 import { isItem, isList } from "../utils/util";
 import DragCopy from "./DragCopy";
@@ -33,6 +34,9 @@ function reducer(state, params) {
       return newList;
     case "delete-list":
       newList.splice(index.listI, 1);
+      return newList;
+    case "create-item":
+      newList[index.listI].items.push({ text: payload, isCompleted: false });
       return newList;
     default:
       throw new Error();
@@ -166,7 +170,15 @@ function ListManager({ initial }) {
               })}
             </Content>
             <Footer>
-              <p>Footer</p>
+              <CreateItem
+                createItem={(data) =>
+                  dispatch({
+                    type: "create-item",
+                    index: { listI },
+                    payload: data,
+                  })
+                }
+              />
             </Footer>
           </List>
         );
