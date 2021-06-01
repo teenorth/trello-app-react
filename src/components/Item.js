@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
 import TextareaAutosize from "react-textarea-autosize";
+import DeleteIcon from "./icons/DeleteIcon";
+import TickIcon from "./icons/TickIcon";
 
-function Item({ clNa, txt, onDrag, mseEnter, updateItem }) {
+function Item({ clNa, txt, completed, onDrag, mseEnter, updateItem, completeItem, delItem }) {
   const [showEdit, setShowEdit] = useState(false);
 
   const handleDrag = (evt, txt) => {
@@ -15,15 +17,38 @@ function Item({ clNa, txt, onDrag, mseEnter, updateItem }) {
     updateItem(data);
   };
 
+  const handleComplete = (evt) => {
+    evt.stopPropagation()
+    completeItem(!completed)
+  }
+
+  const handleDel = (evt) => {
+    evt.stopPropagation()
+    delItem()
+  }
+
+  const getStyle = () => {
+    return { textDecoration: completed ? "line-through" : "" };
+  };
+
   return (
     <>
       {!showEdit ? (
         <div
           draggable
+          style={getStyle()}
           className={clNa}
           onDragStart={(evt) => handleDrag(evt, txt)}
           onClick={() => setShowEdit(true)}>
           <div className="drop-zone" onMouseEnter={() => mseEnter()} />
+          <div className="actions">
+            <div className="button" onClick={(evt) => handleComplete(evt)}>
+              <TickIcon size={16} onClick={(evt) => handleComplete(evt)} />
+            </div>
+            <div className="button" onClick={(evt) => handleDel(evt)}>
+              <DeleteIcon size={10} onClick={(evt) => handleDel(evt)} />
+            </div>
+          </div>
           {txt}
         </div>
       ) : (
