@@ -10,6 +10,7 @@
 
 .list {
   width: 260px;
+  height: max-content;
   margin-right: 15px;
 
   background: #0d0d0f;
@@ -45,4 +46,14 @@
   padding: 5px;
   margin-bottom: 5px;
   margin-right: 0;
+  position: relative;
+}
+
+.drop-zone {
+  position: absolute;
+  /* background: rgba(0, 0, 0, 0.30);  */
+  top: 0;
+  left: 0;
+  height: 28px;
+  width: 100%;
 }
