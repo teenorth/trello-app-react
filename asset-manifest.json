@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/trello-app-react/static/css/main.15203c5b.chunk.css",
-    "main.js": "/trello-app-react/static/js/main.c700d1da.chunk.js",
-    "main.js.map": "/trello-app-react/static/js/main.c700d1da.chunk.js.map",
+    "main.js": "/trello-app-react/static/js/main.0548e45f.chunk.js",
+    "main.js.map": "/trello-app-react/static/js/main.0548e45f.chunk.js.map",
     "runtime-main.js": "/trello-app-react/static/js/runtime-main.56bf6986.js",
     "runtime-main.js.map": "/trello-app-react/static/js/runtime-main.56bf6986.js.map",
     "static/js/2.80db8f8b.chunk.js": "/trello-app-react/static/js/2.80db8f8b.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.56bf6986.js",
     "static/js/2.80db8f8b.chunk.js",
     "static/css/main.15203c5b.chunk.css",
-    "static/js/main.c700d1da.chunk.js"
+    "static/js/main.0548e45f.chunk.js"
   ]
 }
