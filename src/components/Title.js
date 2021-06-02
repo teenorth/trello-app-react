@@ -6,7 +6,10 @@ function Title({ title, updateTitle, delList }) {
 
   const handleUpdate = (data) => {
     setShowEdit(false);
-    updateTitle(data);
+    
+    if (data === title) return;
+    if (!data.replace(/(\r\n|\n|\r)/gm, "").length) return;
+    updateTitle(data.replace(/(\r\n|\n|\r)/gm, ""));
   };
 
   return (
@@ -31,8 +34,13 @@ function Title({ title, updateTitle, delList }) {
 function EditTitle({ current, updateEvent }) {
   const [title, setTitle] = useState(current);
 
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    updateEvent(title);
+  }
+
   return (
-    <form>
+    <form onSubmit={(evt) => handleSubmit(evt)}>
       <input
         type="text"
         value={title}

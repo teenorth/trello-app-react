@@ -14,7 +14,8 @@ function Item({ clNa, txt, completed, onDrag, mseEnter, updateItem, completeItem
   const handleUpdate = (data) => {
     setShowEdit(false);
     if (data === txt) return;
-    updateItem(data);
+    if (!data.replace(/(\r\n|\n|\r)/gm, "").length) return;
+    updateItem(data.replace(/(\r\n|\n|\r)/gm, ""));
   };
 
   const handleComplete = (evt) => {
