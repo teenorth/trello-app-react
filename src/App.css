@@ -385,6 +385,24 @@
   background: var(--main-highlight);
 }
 
+.form-actions {
+  display: flex;
+}
+
+.create-item-form .form-actions div {
+  font-size: 14px;
+  padding: 5px 10px;
+  outline: none;
+  background: #555c69;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  background: var(--main-highlight);
+  width: max-content;
+  margin-right: 5px;
+}
+
 
 .new-list {
   display: flex;
