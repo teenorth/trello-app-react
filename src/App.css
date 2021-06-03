@@ -304,7 +304,8 @@
   position: sticky;
   bottom: 0;
   width: calc(100% + 2px);
-  height: 2.5rem;
+  min-height: 2.5rem;
+  height: max-content;
   display: flex;
   align-items: center;
   cursor: pointer;
