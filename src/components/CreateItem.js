@@ -8,39 +8,35 @@ function CreateItem({ createItem }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowCreate(false);
-
-    if (!text) return;
+    if (!text) return setShowCreate(false);
     createItem(text);
     setText(null);
-  };
-
-  const handleBlur = (e) => {
-    e.preventDefault();
-
-    if (!showCreate) return;
-    setTimeout(() => {
-      setShowCreate(false);
-    }, 100);
+    setShowCreate(false);
   };
 
   return (
     <>
       {!showCreate && (
-        <div className="create-item" onClick={() => setShowCreate(!showCreate)}>
+        <div className="create-item" onClick={() => setShowCreate(true)}>
           <AddIcon size={14} onClick={() => null} />
           <span>Create new task</span>
         </div>
       )}
       {showCreate && (
-        <form className="create-item-form" onSubmit={(e) => handleSubmit(e)}>
+        <form className="create-item-form">
           <TextareaAutosize
             placeholder="New task name"
             onChange={(e) => setText(e.target.value)}
-            onBlur={(e) => handleBlur(e)}
             autoFocus
           />
-          <input type="submit" name="submit" />
+          <div className="form-actions">
+            <div onClick={(evt) => handleSubmit(evt)}>
+              Add
+            </div>
+            <div onClick={() => setShowCreate(false)}>
+              Close
+            </div>
+          </div>
         </form>
       )}
     </>
