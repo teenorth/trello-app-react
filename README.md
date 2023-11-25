@@ -1,6 +1,6 @@
 # Trello style task application made with React.js
 
-[Click here to visit the application](https://taylornorth01.github.io/trello-app-react/).
+[Click here to visit the application](https://teenorth.github.io/trello-app-react/).
 
 ## Known issues
 
